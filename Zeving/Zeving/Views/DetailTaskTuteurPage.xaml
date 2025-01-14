@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Zeving.ViewModels"  
+             xmlns:model="clr-namespace:Zeving.Models"  
+             Shell.PresentationMode="ModalAnimated"
+             x:Class="Zeving.Views.DetailTaskTuteurPage">
+
+    <ContentPage.BindingContext>
+        <vm:DetailTaskTuteurViewModel/>
+    </ContentPage.BindingContext>
+
+   
+    
+    <StackLayout>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+            <Label Text="Déverrouiller"/>  <Switch IsToggled="{Binding IsUnlocked}"/>
+            
+            <Button Text="Previous" Command="{Binding cmdCancel}"/>
+            <Button Text="Delete" Command="{Binding cmdDelete}" IsVisible="{Binding IsUnlocked}"/>
+            <Button Text="Update" Command="{Binding cmdUpdate}" IsVisible="{Binding IsUnlocked}"/>
+          
+        </StackLayout>
+       
+    <RefreshView
+                     IsRefreshing="{Binding IsBusy}"
+                     Command="{Binding cmdLoadDetailledItem}">
+            <ScrollView>
+                <StackLayout Spacing="3" Padding="15">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Date des travaux :"/>
+
+                        <DatePicker Date="{Binding DueDate , StringFormat='{0:dd/MM/yy}'}" Format="0:dd/mm/yy">
+                            <DatePicker.Triggers>
+                                <DataTrigger TargetType="DatePicker" Binding="{Binding IsUnlocked}" Value="False">
+                                    <Setter Property="IsVisible" Value="False"/>
+                                    <Setter Property="Date" Value="{Binding DueDate, StringFormat='{0:dd/MM/yy}'}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="DatePicker" Binding="{Binding IsUnlocked}" Value="True">
+                                    <Setter Property="IsVisible" Value="True"/>
+                                    <Setter Property="Date" Value="{Binding DueDate, StringFormat='{0:dd/MM/yy}'}"/>
+                                </DataTrigger>
+                            </DatePicker.Triggers>
+                        </DatePicker>
+
+                        <Label Text="{Binding DueDate , StringFormat='{0:dd/MM/yy}'}" FontSize="Large">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsUnlocked}" Value="False">
+                                    <Setter Property="IsVisible" Value="True"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsUnlocked}" Value="True">
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </StackLayout>
+                    <Label Text="Site :" />
+                    <Label Text="{Binding NameOfGeographicPosition}" FontSize="Large"/>
+                    <Label Text="Zone :" />
+                    <Label Text="{Binding NameOfInsideLocation}" FontSize="Large"/>
+                    <Label Text="Position Tuteur :" />
+                    <Label Text="{Binding NameOfVanillaLocation}" FontSize="Large"/>
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsAddCompost}" IsEnabled="{Binding IsUnlocked}" IsVisible="{Binding IsUnlocked}"/>
+                        <Label Text="Ajouter du compost">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsAddCompost}" Value="True">
+                                    <Setter Property="FontSize" Value="Large"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsAddCompost}" Value="False">
+                                    <Setter Property="FontSize" Value="Micro"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsAddSlugKiller}" IsEnabled="{Binding IsUnlocked}" IsVisible="{Binding IsUnlocked}"/>
+                        <Label Text="Ajouter AntiLimace">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsAddSlugKiller}" Value="True">
+                                    <Setter Property="FontSize" Value="Large"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsAddSlugKiller}" Value="False">
+                                    <Setter Property="FontSize" Value="Micro"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsNeedsHealling}" IsEnabled="{Binding IsUnlocked}" IsVisible="{Binding IsUnlocked}"/>
+                        <Label Text="Soigner Lianes">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsNeedsHealling}" Value="True">
+                                    <Setter Property="FontSize" Value="Large"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsNeedsHealling}" Value="False">
+                                    <Setter Property="FontSize" Value="Micro"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsNeedsFeeding}" IsEnabled="{Binding IsUnlocked}" IsVisible="{Binding IsUnlocked}"/>
+                        <Label Text="Nourrir Lianes">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsNeedsFeeding}" Value="True">
+                                    <Setter Property="FontSize" Value="Large"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsNeedsFeeding}" Value="False">
+                                    <Setter Property="FontSize" Value="Micro"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsNeedsCleaningLocation}" IsEnabled="{Binding IsUnlocked}" IsVisible="{Binding IsUnlocked}"/>
+                        <Label Text="Désherber, Nettoyer, Boucler">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsNeedsCleaningLocation}" Value="True">
+                                    <Setter Property="FontSize" Value="Large"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsNeedsCleaningLocation}" Value="False">
+                                    <Setter Property="FontSize" Value="Micro"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsFlowerEnabled}" IsEnabled="{Binding IsUnlocked}" IsVisible="{Binding IsUnlocked}"/>
+                        <Label Text="Boutons de fleurs">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsFlowerEnabled}" Value="True">
+                                    <Setter Property="FontSize" Value="Large"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsFlowerEnabled}" Value="False">
+                                    <Setter Property="FontSize" Value="Micro"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsVanillaBeanEndabled}" IsEnabled="{Binding IsUnlocked}" IsVisible="{Binding IsUnlocked}"/>
+                        <Label Text="Gousses de Vanille">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsVanillaBeanEndabled}" Value="True">
+                                    <Setter Property="FontSize" Value="Large"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsVanillaBeanEndabled}" Value="False">
+                                    <Setter Property="FontSize" Value="Micro"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding DidPestsAttacked}" IsEnabled="{Binding IsUnlocked}" IsVisible="{Binding IsUnlocked}"/>
+                        <Label Text="Attaquée par nuisibles">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding DidPestsAttacked}" Value="True">
+                                    <Setter Property="FontSize" Value="Large"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding DidPestsAttacked}" Value="False">
+                                    <Setter Property="FontSize" Value="Micro"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding DidDiseasesAppeared}" IsEnabled="{Binding IsUnlocked}" IsVisible="{Binding IsUnlocked}"/>
+                        <Label Text="Lianes malades">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding DidDiseasesAppeared}" Value="True">
+                                    <Setter Property="FontSize" Value="Large"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding DidDiseasesAppeared}" Value="False">
+                                    <Setter Property="FontSize" Value="Micro"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+
+        </RefreshView>
+    </StackLayout>
+</ContentPage>

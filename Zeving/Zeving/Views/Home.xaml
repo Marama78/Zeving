@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Zeving.ViewModels"
+             xmlns:Img="clr-namespace:Zeving"
+             xmlns:material="clr-namespace:Plugin.MaterialDesignControls.Material3;assembly=Plugin.MaterialDesignControls"
+             Title="{Binding Title}"
+             x:Class="Zeving.Views.Home">
+  
+    <ContentPage.Content>
+  
+    <StackLayout >
+            <Label Text="Bienvenue sur VanillaCare"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   FontSize="Large"/>
+            <Image Source="title.jpg" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
