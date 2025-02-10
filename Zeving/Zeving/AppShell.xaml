@@ -7,6 +7,9 @@
     <FlyoutItem Title="Home">
         <ShellContent Route="Bienvenue" ContentTemplate="{DataTemplate local:Home}"/>
     </FlyoutItem>
+    <FlyoutItem Title="SerrePlanificator">
+        <ShellContent Route="Planificateur" ContentTemplate="{DataTemplate local:SerrePlanificatorPage}"/>
+    </FlyoutItem>
     <FlyoutItem Title="TaskTuteur">
         <ShellContent Route="Travail Journalier" ContentTemplate="{DataTemplate local:TaskTuteurView}"/>
     </FlyoutItem>

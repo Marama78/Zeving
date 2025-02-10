@@ -31,23 +31,14 @@
                 <DataTemplate>
                     <material:MaterialCard Padding="16" Margin="8" BackgroundColor="{Binding ZoneColor}">
                         <material:MaterialCard.Triggers>
-                            <DataTrigger TargetType="material:MaterialCard"  Binding="{Binding NameOfInsideLocation}" Value="Z1A">
-                                <Setter Property="BackgroundColor" Value="Pink"/>
-                            </DataTrigger>
-                            <DataTrigger TargetType="material:MaterialCard"  Binding="{Binding NameOfInsideLocation}" Value="Z1B">
-                                <Setter Property="BackgroundColor" Value="Pink"/>
-                            </DataTrigger>
-                            <DataTrigger TargetType="material:MaterialCard"  Binding="{Binding NameOfInsideLocation}" Value="Z2A">
+                            <DataTrigger TargetType="material:MaterialCard" Binding="{Binding DelayTrigger}" Value="0" >
                                 <Setter Property="BackgroundColor" Value="LightGreen"/>
                             </DataTrigger>
-                            <DataTrigger TargetType="material:MaterialCard"  Binding="{Binding NameOfInsideLocation}" Value="Z2B">
-                                <Setter Property="BackgroundColor" Value="LightGreen"/>
+                            <DataTrigger TargetType="material:MaterialCard" Binding="{Binding DelayTrigger}" Value="1" >
+                                <Setter Property="BackgroundColor" Value="LightYellow"/>
                             </DataTrigger>
-                            <DataTrigger TargetType="material:MaterialCard"  Binding="{Binding NameOfInsideLocation}" Value="Z3A">
-                                <Setter Property="BackgroundColor" Value="LightBlue"/>
-                            </DataTrigger>
-                            <DataTrigger TargetType="material:MaterialCard"  Binding="{Binding NameOfInsideLocation}" Value="Z3B">
-                                <Setter Property="BackgroundColor" Value="LightBlue"/>
+                            <DataTrigger TargetType="material:MaterialCard" Binding="{Binding DelayTrigger}" Value="2" >
+                                <Setter Property="BackgroundColor" Value="Red"/>
                             </DataTrigger>
                         </material:MaterialCard.Triggers>
                         <StackLayout x:DataType="model:TaskTuteur">
@@ -56,25 +47,26 @@
                                 <Label Text="date :"/>
                                 <Label Text="{Binding DueDate , StringFormat='{0:dd/MM/yy}'}" FontSize="Medium"/>
                             </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Temps Passé :"/>
+                                <Label Text="{Binding DelayDay}" FontSize="Medium" VerticalTextAlignment="Center"/>
+                                <Label Text=" jours"/>
+                            </StackLayout>
                             <StackLayout Orientation="Horizontal" >
                                 <Label Text="Site :"/>
                                 <Label Text="{Binding NameOfGeographicPosition}" FontSize="Medium"/>
                             </StackLayout>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="Zone :"/>
-                                <Label Text="{Binding NameOfInsideLocation}" FontSize="Medium"/>
-                            </StackLayout>
+                          
                             <StackLayout Orientation="Horizontal">
                                 <Label Text="Location :"/>
-                                <Label Text="{Binding NameOfVanillaLocation}" FontSize="Medium"/>
+                                <Label Text="{Binding TuteurLocation}" FontSize="Medium"/>
                             </StackLayout>
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer 
-NumberOfTapsRequired="1"
-Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TaskTuteurViewModel}}, Path=ItemTapped}"		
-CommandParameter="{Binding .}">
+                                    NumberOfTapsRequired="1"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TaskTuteurViewModel}}, Path=ItemTapped}"		
+                                    CommandParameter="{Binding .}"> 
                                 </TapGestureRecognizer>
-
                             </StackLayout.GestureRecognizers>
                         </StackLayout>
 

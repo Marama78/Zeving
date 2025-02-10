@@ -88,7 +88,14 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\tuteurIcon.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidResource>
+    <Content Include="Resources\drawable\icon_about.png" />
+    <Content Include="Resources\drawable\icon_feed.png" />
+    <Content Include="Resources\drawable\xamarin_logo.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zeving\Zeving.csproj">
       <Project>{69252227-FF29-4057-8BDA-657264A3B9BF}</Project>

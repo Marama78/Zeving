@@ -9,12 +9,14 @@
   
     <ContentPage.Content>
   
-    <StackLayout >
+    <StackLayout x:DataType="vm:HomeViewModel">
             <Label Text="Bienvenue sur VanillaCare"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" 
                    FontSize="Large"/>
-            <Image Source="title.jpg" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
+            <Image
+                Source="{Binding ImageUrl}"
+                VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

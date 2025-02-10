@@ -25,11 +25,11 @@ namespace Zeving.ViewModels
             get { return ameOfInsideLocation; }
             set { ameOfInsideLocation = value; }
         }
-        private string nameOfVanillaLocation;
-        public string NameOfVanillaLocation
+        private string tuteurLocation;
+        public string TuteurLocation
         {
-            get { return nameOfVanillaLocation; }
-            set { nameOfVanillaLocation = value; }
+            get => tuteurLocation; 
+            set => SetProperty(ref tuteurLocation, value);
         }
 
         private bool isAddCompost;
@@ -112,19 +112,27 @@ namespace Zeving.ViewModels
             }
         }
 
+        private int line;
+        public int Line
+            { get { return line; } set { line = value; } }
+
+        private int column;
+        public int Column
+        { get { return column; } set { column = value; } }
 
 
         public void UpdateNameSite(ref int ID)
         {
+            IsBusy = true;
             try
             {
                 switch (ID)
                 {
                     case 0:
-                        nameOfGeographicPosition = "Pueu";
+                        NameOfGeographicPosition = "Pueu";
                         break;
                     case 1:
-                        nameOfGeographicPosition = "Punui";
+                        NameOfGeographicPosition = "Punui";
                     break;
                 }
             }
@@ -134,35 +142,17 @@ namespace Zeving.ViewModels
             }
             finally
             {
+                IsBusy = false;
             }
         }
 
-        public void UpdateNameZone(ref int ID)
+        public void UpdateLineLocation(ref int ID)
         {
+            IsBusy = true;
             try
             {
-                switch (ID)
-                {
-                    case 0:
-                        NameOfInsideLocation = "Z1A";
-                        break;
-                    case 1:
-                        NameOfInsideLocation = "Z1B";
-                        break;
-                    case 2:
-                        NameOfInsideLocation = "Z2A";
-                        break;
-                    case 3:
-                        NameOfInsideLocation = "Z2B";
-                        break;
-                    case 4:
-                        NameOfInsideLocation = "Z3A";
-                        break;
-                    case 5:
-                        NameOfInsideLocation = "Z3B";
-                        break;
-
-                }
+                line = ID+1;
+                TuteurLocation = "L" + line + "C" + column;
             }
             catch (Exception ex)
             {
@@ -170,46 +160,18 @@ namespace Zeving.ViewModels
             }
             finally
             {
+                IsBusy = false;
             }
         }
 
-        public void UpdateNameTuteur(ref int ID)
+       
+        public void UpdateColumnLocation(ref int ID)
         {
+            IsBusy = true;
             try
             {
-                switch (ID)
-                {
-                    case 0:
-                        NameOfVanillaLocation = "A";
-                        break;
-                    case 1:
-                        NameOfVanillaLocation = "B";
-                        break;
-                    case 2:
-                        NameOfVanillaLocation = "C";
-                        break;
-                    case 3:
-                        NameOfVanillaLocation = "D";
-                        break;
-                    case 4:
-                        NameOfVanillaLocation = "E";
-                        break;
-                    case 5:
-                        NameOfVanillaLocation = "1";
-                        break;
-                    case 6:
-                        NameOfVanillaLocation = "2";
-                        break;
-                    case 7:
-                        NameOfVanillaLocation = "3";
-                        break;
-                    case 8:
-                        NameOfVanillaLocation = "4";
-                        break;
-                    case 9:
-                        NameOfVanillaLocation = "5";
-                        break;
-                }
+                column = ID+1;
+                TuteurLocation = "L" + line + "C" + column;
             }
             catch (Exception ex)
             {
@@ -217,6 +179,7 @@ namespace Zeving.ViewModels
             }
             finally
             {
+                IsBusy = false;
             }
         }
 
@@ -229,14 +192,9 @@ namespace Zeving.ViewModels
             cmdSave = new Command(SaveTask);
             cmdCancel = new Command(OnCancel);
             this.PropertyChanged += (_,__) => cmdSave.ChangeCanExecute();
-        }
 
-
-        private bool ValidateSave()
-        {
-            return !string.IsNullOrWhiteSpace(NameOfGeographicPosition) 
-               && !string.IsNullOrWhiteSpace(NameOfVanillaLocation) 
-               && !string.IsNullOrWhiteSpace(NameOfInsideLocation);
+            NameOfGeographicPosition = App.CurrentSite;
+            TuteurLocation = App.CurrentTuteur;
         }
 
 
@@ -247,33 +205,26 @@ namespace Zeving.ViewModels
 
         private async void SaveTask(object obj)
         {
-           
-
-          //  if (ValidateSave()) return;
-
             TaskTuteur tt = new TaskTuteur()
             {
                 NameOfGeographicPosition = this.NameOfGeographicPosition,
-                NameOfInsideLocation = this.NameOfInsideLocation,
-                NameOfVanillaLocation = this.NameOfVanillaLocation,
+                Line = this.Line,
+                Column = this.Column,
+                TuteurLocation = this.TuteurLocation,
                 IsAddCompost = this.IsAddCompost,
                 IsAddSlugKiller = this.IsAddSlugKiller,
                 IsNeedsHealling = this.IsNeedsHealling,
                 IsNeedsFeeding = this.IsNeedsFeeding,
                 IsNeedsCleaningLocation = this.IsNeedsCleaningLocation,
                 IsFlowerEnabled = this.IsFlowerEnabled,
-                IsVanillaBeanEndabled = this.IsVanillaBeanEndabled,
+                IsVanillaBeanEnabled = this.IsVanillaBeanEndabled,
                 VanillaBeansCount = this.VanillaBeansCount,
                 DidPestsAttacked = this.DidPestsAttacked,
                 DidDiseasesAppeared = this.DidDiseasesAppeared,
                 DueDate = this.DueDate,
             };
-            Debug.WriteLine("///////////////////////////////////////////");
-            Debug.WriteLine("tt is : " + NameOfGeographicPosition);
-            Debug.WriteLine("date is : " + DueDate);
-            Debug.WriteLine("///////////////////////////////////////////");
+           
             await App.TaskTuteurDatabase.SaveTaskAsync(tt);
-          
             
             await Shell.Current.GoToAsync("..");
         }

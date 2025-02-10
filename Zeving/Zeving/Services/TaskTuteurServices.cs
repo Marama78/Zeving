@@ -46,6 +46,29 @@ namespace Zeving.Services
 
         }
 
+
+
+        public async Task<TaskTuteur> LoadDataAsyncByTuteurLocation(string tuteurLocation   )
+        {
+            try
+            {
+                var delta = await _database.Table<TaskTuteur>().FirstOrDefaultAsync(p => p.TuteurLocation == tuteurLocation);
+
+                return delta;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+
+            }
+
+            return null;
+
+        }
+
+
+
+
         public async Task<bool> UpdateDataAsync(TaskTuteur taskTuteur)
         {
             try

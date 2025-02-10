@@ -14,10 +14,11 @@ namespace Zeving.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DetailTaskTuteurPage : ContentPage
     {
+        DetailTaskTuteurViewModel viewModel;
         public DetailTaskTuteurPage()
         {
             InitializeComponent();
-            BindingContext =  new DetailTaskTuteurViewModel();
+            BindingContext =  viewModel =new DetailTaskTuteurViewModel();
         }
 
         protected override void OnAppearing()
@@ -25,5 +26,11 @@ namespace Zeving.Views
             base.OnAppearing();
             IsBusy = true;
         }
+
+        private void Switch_Toggled(object sender, ToggledEventArgs e)
+        {
+            viewModel.SetVisibilityCheckBoxes();
+        }
+
     }
 }

@@ -20084,6 +20084,9 @@ namespace Zeving.Droid
 			// aapt resource value: 0x7F070091
 			public const int tooltip_frame_light = 2131165329;
 			
+			// aapt resource value: 0x7F070092
+			public const int tuteurIcon = 2131165330;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

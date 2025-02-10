@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 using Zeving.Models;
 using Zeving.Views;
 
 namespace Zeving.ViewModels
 {
+    
     public class TaskTuteurViewModel : BaseViewModel
     {
 
@@ -24,6 +27,28 @@ namespace Zeving.ViewModels
                 OnItemSelected(value);
             }
         }
+
+        private int delayTrigger;
+        public int DelayTrigger
+        {
+            get
+            {
+               
+                    return delayTrigger;
+            }
+
+            set { delayTrigger = value; }
+        }
+
+        private int delayDay;
+
+        public int DelayDay
+        {
+            get { return delayDay; }
+            set { delayDay = value; }
+        }
+
+
         private int id;
         public string Id
         {
@@ -52,68 +77,6 @@ namespace Zeving.ViewModels
         {
             get { return nameOfVanillaLocation; }
             set { nameOfVanillaLocation = value; }
-        }
-
-        private bool isAddCompost;
-        public bool IsAddCompost
-        {
-            get { return isAddCompost; }
-            set { isAddCompost = value; }
-        }
-        private bool isAddSlugKiller;
-        public bool IsAddSlugKiller
-        {
-            get { return isAddSlugKiller; }
-            set { isAddSlugKiller = value; }
-        }
-        private bool isNeedsHealling;
-        public bool IsNeedsHealling
-        {
-            get { return isNeedsHealling; }
-            set { isNeedsHealling = value; }
-        }
-        private bool isNeedsFeeding;
-        public bool IsNeedsFeeding
-        {
-            get { return isNeedsFeeding; }
-            set { isNeedsFeeding = value; }
-        }
-        private bool isNeedsCleaningLocation;
-        public bool IsNeedsCleaningLocation
-        {
-            get { return isNeedsCleaningLocation; }
-            set { isNeedsCleaningLocation = value; }
-        }
-        private bool isFlowerEnabled;
-        public bool IsFlowerEnabled
-        {
-            get { return isFlowerEnabled; }
-            set { isFlowerEnabled = value; }
-        }
-        private bool isVanillaBeanEndabled;
-        public bool IsVanillaBeanEndabled
-        {
-            get { return isVanillaBeanEndabled; }
-            set { isVanillaBeanEndabled = value; }
-        }
-        private bool didPestsAttacked;
-        public bool DidPestsAttacked
-        {
-            get { return didPestsAttacked; }
-            set { didPestsAttacked = value; }
-        }
-        private bool didDiseasesAppeared;
-        public bool DidDiseasesAppeared
-        {
-            get { return didDiseasesAppeared; }
-            set { didDiseasesAppeared = value; }
-        }
-
-        private int vanillaBeansCount;
-        public int VanillaBeansCount
-        {
-            get { return vanillaBeansCount; }
-            set { vanillaBeansCount = value; }
         }
 
         private DateTime dueDate;
@@ -145,7 +108,14 @@ namespace Zeving.ViewModels
            
         }
 
+
        
+
+       public void SetTuteurLocation(string siteProd, string location)
+       {
+            NameOfGeographicPosition = siteProd;
+            NameOfVanillaLocation = location;
+       }
         public void OnAppearing()
         {
             IsBusy = true;
@@ -160,25 +130,29 @@ namespace Zeving.ViewModels
                 TaskTuteurs.Clear();
                  var tt = await App.TaskTuteurDatabase.GetListTaskTeurSortedByDateAsync();
 
-
-              /*  for (int i = tt.Count; i >0 ; i--)
-                {
-                    TaskTuteurs.Add(tt[i]);
-                }*/
-
-
                  foreach (var task in tt)
                  {
-                     TaskTuteurs.Add(task);
+
+                    TimeSpan tempdelay = DateTime.Now - task.DueDate;
+
+                    int duedelay = (int)tempdelay.TotalDays;
+
+                    if (duedelay < 8) task.DelayTrigger = 0;
+                    else if (duedelay >= 8 && duedelay <= 16) task.DelayTrigger = 1;
+                    else if (duedelay > 16) task.DelayTrigger = 2;
+                    else task.DelayTrigger = 5;
+
+                   task.DelayDay = duedelay;
+
+                    TaskTuteurs.Add(task);
                  }
 
+                 //-- ranger par ordre décroissant --
                 TaskTuteurs.Reverse();
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("**************************");
                 Debug.WriteLine(ex);
-                Debug.WriteLine("**************************");
             }
             finally
             {

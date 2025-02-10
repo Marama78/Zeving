@@ -9,6 +9,7 @@
         <viewmodel:NewTaskTuteurViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
+        <RefreshView IsRefreshing="{Binding IsBusy}">
         <ScrollView>
         <StackLayout BackgroundColor="LightCyan" Spacing="3" Padding="15">
             <Label Text="Date des travaux :"/>
@@ -23,37 +24,49 @@
                     </Picker.Items>
                 </Picker>
 
+                <Label Text="{Binding TuteurLocation}" FontSize="Large"/>
 
                 <!--<Entry Text="{Binding NameOfGeographicPosition, Mode=TwoWay}"/>-->
+                <StackLayout Orientation="Horizontal" 
+                             HorizontalOptions="CenterAndExpand"
+                             VerticalOptions="Center">
+                    <Label Text="Ligne :"  FontSize="Large"/>
+                    <Picker x:Name="pickerLine" TitleColor="red" 
+                    SelectedIndexChanged="PickerLineGetSelectedItem">
+                        <Picker.Items>
+                            <x:String>1</x:String>
+                            <x:String>2</x:String>
+                            <x:String>3</x:String>
+                            <x:String>4</x:String>
+                            <x:String>5</x:String>
+                            <x:String>6</x:String>
+                            <x:String>7</x:String>
+                            <x:String>8</x:String>
+                            <x:String>9</x:String>
+                            <x:String>10</x:String>
+                            <x:String>11</x:String>
 
-                <Label Text="Zone :" />
-                <Picker x:Name="pickerZone" TitleColor="red" 
-                         SelectedIndexChanged="PickerZoneGetSelectedItem">
-                    <Picker.Items>
-                        <x:String>Z1A</x:String>
-                        <x:String>Z1B</x:String>
-                        <x:String>Z2A</x:String>
-                        <x:String>Z2B</x:String>
-                        <x:String>Z3A</x:String>
-                        <x:String>Z3B</x:String>
-                    </Picker.Items>
-                </Picker>
-                <Label Text="Position Tuteur :" />
-                <Picker x:Name="pickerTuteur" TitleColor="red" 
-          SelectedIndexChanged="PickerTuteurGetSelectedItem">
-                    <Picker.Items>
-                        <x:String>A</x:String>
-                        <x:String>B</x:String>
-                        <x:String>C</x:String>
-                        <x:String>D</x:String>
-                        <x:String>E</x:String>
-                        <x:String>1</x:String>
-                        <x:String>2</x:String>
-                        <x:String>3</x:String>
-                        <x:String>4</x:String>
-                        <x:String>5</x:String>
-                    </Picker.Items>
-                </Picker>
+                        </Picker.Items>
+                    </Picker>
+                    <Label Text="Colonne :" FontSize="Large"/>
+                    <Picker x:Name="pickerColumn" TitleColor="red" 
+                    SelectedIndexChanged="PickerColumnGetSelectedItem">
+                        <Picker.Items>
+                            <x:String>1</x:String>
+                            <x:String>2</x:String>
+                            <x:String>3</x:String>
+                            <x:String>4</x:String>
+                            <x:String>5</x:String>
+                            <x:String>6</x:String>
+                            <x:String>7</x:String>
+                            <x:String>8</x:String>
+                            <x:String>9</x:String>
+                            <x:String>10</x:String>
+
+                        </Picker.Items>
+                    </Picker>
+                </StackLayout>
+
 
                 <StackLayout Orientation="Horizontal">
                 <CheckBox IsChecked="{Binding IsAddCompost, Mode=TwoWay}"/>
@@ -100,5 +113,6 @@
             </StackLayout>
         </StackLayout>
         </ScrollView>
+        </RefreshView>
     </ContentPage.Content>
 </ContentPage>

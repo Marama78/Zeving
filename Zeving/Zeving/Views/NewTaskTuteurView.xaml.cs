@@ -27,16 +27,16 @@ namespace Zeving.Views
             viewModel.UpdateNameSite(ref value);
         }
 
-        private void PickerZoneGetSelectedItem(object sender, EventArgs e)
+        private void PickerLineGetSelectedItem(object sender, EventArgs e)
         {
-            int value = pickerZone.SelectedIndex;
-            viewModel.UpdateNameZone(ref value);
+            int value = pickerLine.SelectedIndex;
+            viewModel.UpdateLineLocation(ref value);
         }
 
-        private void PickerTuteurGetSelectedItem(object sender, EventArgs e)
+        private void PickerColumnGetSelectedItem(object sender, EventArgs e)
         {
-            int value = pickerTuteur.SelectedIndex;
-            viewModel.UpdateNameTuteur(ref value);
+            int value = pickerColumn.SelectedIndex;
+            viewModel.UpdateColumnLocation(ref value);
         }
     }
 }

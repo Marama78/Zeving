@@ -52,5 +52,15 @@ namespace Zeving.ViewModels
             OnPropertyChanged(propertyName);
             return true;
         }
+
+        protected bool SetPropertyAndAction<T>(ref T backingStore, T value, Action action)
+        {
+            SetProperty(ref backingStore, value);
+            action();
+
+            return false;
+        }
+
+    
     }
 }
